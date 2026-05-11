@@ -1,18 +1,27 @@
 package org.wildstang.framework.subsystem;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.wildstang.framework.CoreUtils;
 import org.wildstang.framework.logger.Log;
 
+/**
+ * Manages Subsystem creation and cycling on behalf of Core.
+ */
 public class SubsystemManager {
     
-    private ArrayList<Subsystem> subsystems;
+    private HashMap<SubsystemEnum, Subsystem> subsystems;
 
     public SubsystemManager() {
-        subsystems = new ArrayList<>();
+        Log.info("Creating SubsystemManager");
+
+        subsystems = new HashMap<>();
     }
 
+    /**
+     * Constructs and initializes the specified set of Subsystems, if not already called.
+     * @param definedSubsystems Subsystems defined in WsSubsystems
+     */
     public void createSubsystems(SubsystemEnum[] definedSubsystems) {
         if (!subsystems.isEmpty()) {
             Log.warn("Subsystems already exist, skipping createSubsystems");
@@ -26,7 +35,7 @@ public class SubsystemManager {
                     subsystem.init();
                     subsystem.initInputs();
                     subsystem.initOutputs();
-                    subsystems.add(subsystem);
+                    subsystems.put(ssEnum, subsystem);
                     Log.info("Created subsystem " + ssEnum.getName());
                 }
                 catch (Exception e) {
@@ -35,14 +44,26 @@ public class SubsystemManager {
             }
         }
 
-        for (Subsystem subsystem : subsystems) {
+        for (Subsystem subsystem : subsystems.values()) {
             subsystem.initSubsystems();
         }
     }
 
+    /**
+     * Periodically triggers each available subsystem to update.
+     */
     public void update() {
-        for (Subsystem subsystem : subsystems) {
+        for (Subsystem subsystem : subsystems.values()) {
             subsystem.update();
         }
+    }
+
+    /**
+     * Gets a constructed subsystem using the subsystem definition.
+     * @param definedSubsystem Enumeration defining the desired subsystem
+     * @return The requested Subsystem instance
+     */
+    public Subsystem getSubsystem(SubsystemEnum definedSubsystem) {
+        return subsystems.get(definedSubsystem);
     }
 }

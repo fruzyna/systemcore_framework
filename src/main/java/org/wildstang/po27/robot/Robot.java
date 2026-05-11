@@ -1,38 +1,63 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package org.wildstang.po27.robot;
 
 import org.wildstang.framework.Core;
+import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.opmode.OpModeEnum;
+import org.wpilib.driverstation.RobotState;
 import org.wpilib.framework.OpModeRobot;
+import org.wpilib.framework.RobotBase;
 
 /**
- * The methods in this class are called automatically as described in the OpModeRobot documentation.
- * OpMode classes anywhere in the package (or sub-packages) where this class is located are
- * automatically registered to display in the Driver Station. If you change the name of this class
- * or the package after creating this project, you must also update the Main.java file in the
- * project.
+ * The base class of the robot, create in Main.
+ * This is effectively framework code, most functions interface directly to Core.
  */
 public class Robot extends OpModeRobot {
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
-  public Robot() {
-    Core.getInstance().initRobot(WsSubsystems.values());
-  }
 
-  /** This function is called exactly once when the DS first connects. */
-  @Override
-  public void driverStationConnected() {}
+    public Robot() {
+        super(Core.getLoopRate());
 
-  /**
-   * This function is called periodically anytime when no opmode is selected, including when the
-   * Driver Station is disconnected.
-   */
-  @Override
-  public void nonePeriodic() {
-    Core.getInstance().update();
-  }
+        Core.getInstance().initRobot(WsSubsystems.values());
+
+        populateOpModes();
+    }
+
+    public void populateOpModes() {
+        clearOpModes();
+
+        for (OpModeEnum opMode : WsOpModes.values()) {
+            if (opMode.isEnabled() && (!RobotBase.isSimulation() || opMode.inSimulation()) && (!RobotState.isFMSAttached() || opMode.inCompetition())) {
+                addOpMode(opMode.getOpModeClass(), opMode.getRobotMode(), opMode.getName());
+            }
+        }
+
+        publishOpModes();
+    }
+
+    @Override
+    public void disabledExit() {
+        Core.getInstance().onEnabled();
+    }
+
+    @Override
+    public void disabledInit() {
+        Core.getInstance().onDisabled();
+    }
+
+    @Override
+    public void robotPeriodic() {
+        Core.getInstance().update();
+    }
+
+    @Override
+    public void driverStationConnected() {
+        Log.info("Driver station connected");
+
+        // refresh op modes to check if FMS is attached again
+        populateOpModes();
+    }
+
+    @Override
+    public void simulationInit() {
+        Log.info("Simulation connected");
+    }
 }

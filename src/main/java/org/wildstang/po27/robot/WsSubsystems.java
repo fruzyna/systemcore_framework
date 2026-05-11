@@ -1,39 +1,47 @@
 package org.wildstang.po27.robot;
 
+import org.wildstang.framework.Core;
+import org.wildstang.framework.subsystem.Subsystem;
 import org.wildstang.framework.subsystem.SubsystemEnum;
-import org.wildstang.po27.subsystem.Test;
+import org.wildstang.po27.subsystem.GamepadTest;
+import org.wildstang.po27.subsystem.LoopTimer;
 
 public enum WsSubsystems implements SubsystemEnum {
 
-    TEST("Test", Test.class);
+    LOOP_TIMER("Loop Timer", LoopTimer.class),
+    GAMEPAD("Gamepad", GamepadTest.class);
 
-    private String name;
-    private Class<?> subsystemClass;
-    private boolean enabled;
+    private String mName;
+    private Class<? extends Subsystem> mSubsystemClass;
+    private boolean mEnabled;
 
-    WsSubsystems(String name, Class<?> subsystemClass, boolean enabled) {
-        this.name = name;
-        this.subsystemClass = subsystemClass;
-        this.enabled = enabled;
+    WsSubsystems(String pName, Class<? extends Subsystem> pSubsystemClass, boolean pEnabled) {
+        mName = pName;
+        mSubsystemClass = pSubsystemClass;
+        mEnabled = pEnabled;
     }
 
-    WsSubsystems(String name, Class<?> subsystemClass) {
-        this(name, subsystemClass, true);
+    WsSubsystems(String pName, Class<? extends Subsystem> pSubsystemClass) {
+        this(pName, pSubsystemClass, true);
     }
 
     @Override
     public String getName() {
-        return name;
+        return mName;
     }
 
     @Override
-    public Class<?> getSubsystemClass() {
-        return subsystemClass;
+    public Class<? extends Subsystem> getSubsystemClass() {
+        return mSubsystemClass;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return mEnabled;
     }
     
+    public Subsystem get() {
+        return Core.getInstance().getSubsystemManager().getSubsystem(this);
+    }
+
 }

@@ -2,12 +2,12 @@ package org.wildstang.framework.logger;
 
 /**
  * Static class wrapping System.out/err logging functions for nicer and controlled output.
- * The level controls which log functions work the higher the set level, the fewers logs.
+ * The level controls which log functions work. The higher the set level, the fewer logs.
  * Lowest to highest: info, warn, error, none.
  */
 public class Log {
     
-    private static LogLevel level = LogLevel.WARN;
+    private static LogLevel level = LogLevel.INFO;
 
     /**
      * Internal function to build stack trace note.
