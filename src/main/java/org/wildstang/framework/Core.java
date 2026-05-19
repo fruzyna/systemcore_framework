@@ -8,7 +8,9 @@ import org.wpilib.hardware.hal.RobotMode;
 import java.util.ArrayList;
 
 import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.opmode.AutoOpMode;
 import org.wildstang.framework.opmode.OpModeEnum;
+import org.wildstang.framework.opmode.WsOpMode;
 import org.wildstang.framework.subsystem.SubsystemEnum;
 
 /**
@@ -94,7 +96,10 @@ public class Core {
     public ArrayList<OpModeEnum> updateAvailableOpModes() {
         availableOpModes.clear();
         for (OpModeEnum opMode : configuredOpModes) {
-            if (opMode.isEnabled() && (!RobotBase.isSimulation() || opMode.inSimulation()) && (!RobotState.isFMSAttached() || opMode.inCompetition())) {
+            if (opMode.isEnabled() && (!RobotBase.isSimulation() || opMode.inSimulation()) &&
+                (!RobotState.isFMSAttached() || opMode.inCompetition()) &&
+                (opMode.getRobotMode() != RobotMode.AUTONOMOUS || AutoOpMode.class.isAssignableFrom(opMode.getOpModeClass())) &&
+                (opMode.getRobotMode() == RobotMode.AUTONOMOUS || WsOpMode.class.isAssignableFrom(opMode.getOpModeClass()))) {
                 availableOpModes.add(opMode);
             }
         }
