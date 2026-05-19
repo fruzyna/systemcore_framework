@@ -1,6 +1,6 @@
 package org.wildstang.po27.robot;
 
-import org.wildstang.framework.opmode.MatchTeleop;
+import org.wildstang.framework.opmode.WsOpMode;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.opmode.Sleeper;
 import org.wpilib.hardware.hal.RobotMode;
@@ -8,11 +8,13 @@ import org.wpilib.opmode.OpMode;
 
 public enum WsOpModes implements OpModeEnum {
 
-    MATCH("Match", MatchTeleop.class, RobotMode.TELEOPERATED, true, true, true),
+    MATCH("Match", WsOpMode.class, RobotMode.TELEOPERATED, true, true, true),
     SLEEPER("Sleeper", Sleeper.class),
     SLEEPER_1("No Sim", Sleeper.class, RobotMode.AUTONOMOUS, true, false, true),
     SLEEPER_2("Disabled", Sleeper.class, RobotMode.AUTONOMOUS, true, true, false),
-    SLEEPER_3("No FMS", Sleeper.class, RobotMode.AUTONOMOUS, false, true, true);
+    SLEEPER_3("No FMS", Sleeper.class, RobotMode.AUTONOMOUS, false, true, true),
+    CHANGED_FNS("Changed Functions", WsOpMode.class, RobotMode.UTILITY, false, true, true),
+    INPUT_FNS("Input Functions", WsOpMode.class, RobotMode.UTILITY, false, true, true);
 
     private String mName;
     private Class<? extends OpMode> mOpModeClass;

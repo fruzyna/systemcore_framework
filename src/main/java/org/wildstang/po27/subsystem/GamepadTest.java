@@ -57,7 +57,7 @@ public class GamepadTest implements Subsystem {
                     bPressed = false;
                 }
             }
-            else {
+            else if (utilMode == WsOpModes.INPUT_FNS) {
                 bPressed = WsGamepad.getDriver().getEastFaceButton();
                 // These axes appear to be backwards (others are wrong too)
                 triggerPressed = Math.abs(WsGamepad.getDriver().getRightX()) > 0.1;
