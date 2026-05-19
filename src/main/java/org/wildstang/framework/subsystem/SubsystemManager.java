@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.wildstang.framework.CoreUtils;
 import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.opmode.OpModeEnum;
 
 /**
  * Manages Subsystem creation and cycling on behalf of Core.
@@ -52,9 +53,25 @@ public class SubsystemManager {
     /**
      * Periodically triggers each available subsystem to update.
      */
-    public void update() {
+    public void update(OpModeEnum opMode) {
         for (Subsystem subsystem : subsystems.values()) {
-            subsystem.update();
+            if (opMode != null) {
+                switch (opMode.getRobotMode()) {
+                    case AUTONOMOUS:
+                        subsystem.autoUpdate(opMode);
+                        break;
+                    case TELEOPERATED:
+                        subsystem.teleUpdate(opMode);
+                        break;
+                    case UTILITY:
+                        subsystem.utilUpdate(opMode);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            subsystem.applyChanges();
         }
     }
 

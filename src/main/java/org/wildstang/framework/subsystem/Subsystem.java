@@ -1,5 +1,7 @@
 package org.wildstang.framework.subsystem;
 
+import org.wildstang.framework.opmode.OpModeEnum;
+
 /**
  * Represents the functions required by all subsystems.
  */
@@ -26,8 +28,26 @@ public interface Subsystem {
     void initSubsystems();
 
     /**
-     * Called periodically to update the subsystem state.
+     * Update function called during AUTONOMOUS OpModes before applyChanges().
+     * @param autoMode Selected OpMode.
      */
-    void update();
+    void autoUpdate(OpModeEnum autoMode);
+
+    /**
+     * Update function called during TELEOPERATED OpModes before applyChanges().
+     * @param autoMode Selected OpMode.
+     */
+    void teleUpdate(OpModeEnum teleMode);
+
+    /**
+     * Update function called during UTILITY OpModes before applyChanges().
+     * @param autoMode Selected OpMode.
+     */
+    void utilUpdate(OpModeEnum utilMode);
+
+    /**
+     * Called periodically to update the subsystem state, regardless of RobotMode.
+     */
+    void applyChanges();
     
 }

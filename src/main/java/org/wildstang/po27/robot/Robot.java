@@ -3,9 +3,7 @@ package org.wildstang.po27.robot;
 import org.wildstang.framework.Core;
 import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.opmode.OpModeEnum;
-import org.wpilib.driverstation.RobotState;
 import org.wpilib.framework.OpModeRobot;
-import org.wpilib.framework.RobotBase;
 
 /**
  * The base class of the robot, create in Main.
@@ -16,18 +14,17 @@ public class Robot extends OpModeRobot {
     public Robot() {
         super(Core.getLoopRate());
 
-        Core.getInstance().initRobot(WsSubsystems.values());
+        Core.getInstance().initRobot(WsSubsystems.values(), WsOpModes.values());
 
         populateOpModes();
     }
 
     public void populateOpModes() {
         clearOpModes();
-
-        for (OpModeEnum opMode : WsOpModes.values()) {
-            if (opMode.isEnabled() && (!RobotBase.isSimulation() || opMode.inSimulation()) && (!RobotState.isFMSAttached() || opMode.inCompetition())) {
-                addOpMode(opMode.getOpModeClass(), opMode.getRobotMode(), opMode.getName());
-            }
+        
+        for (OpModeEnum opMode : Core.getInstance().updateAvailableOpModes()) {
+            addOpMode(opMode.getOpModeClass(), opMode.getRobotMode(), opMode.getName());
+            Log.info("Added " + opMode.getRobotMode().name() + " op mode " + opMode.getName());
         }
 
         publishOpModes();

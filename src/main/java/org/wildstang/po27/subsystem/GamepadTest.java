@@ -1,6 +1,7 @@
 package org.wildstang.po27.subsystem;
 
 import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.subsystem.Subsystem;
 import org.wpilib.driverstation.Gamepad;
 
@@ -34,7 +35,19 @@ public class GamepadTest implements Subsystem {
     }
 
     @Override
-    public void update() {
+    public void autoUpdate(OpModeEnum autoMode) {
+    }
+
+    @Override
+    public void teleUpdate(OpModeEnum teleMode) {
+    }
+
+    @Override
+    public void utilUpdate(OpModeEnum utilMode) {
+    }
+
+    @Override
+    public void applyChanges() {
         if (gamepad.isConnected()) {
             boolean pressed = gamepad.getButton(Gamepad.Button.EAST_FACE);
             if (pressed != state) {

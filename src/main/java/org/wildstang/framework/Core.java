@@ -1,7 +1,14 @@
 package org.wildstang.framework;
 
 import org.wildstang.framework.subsystem.SubsystemManager;
+import org.wpilib.driverstation.RobotState;
+import org.wpilib.framework.RobotBase;
+import org.wpilib.hardware.hal.RobotMode;
+
+import java.util.ArrayList;
+
 import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.subsystem.SubsystemEnum;
 
 /**
@@ -34,11 +41,16 @@ public class Core {
         return 1.0 / LOOP_RATE;
     }
 
+    private OpModeEnum[] configuredOpModes = {};
+    ArrayList<OpModeEnum> availableOpModes;
+
     private SubsystemManager subsystemManager;
 
-    public Core() {
+    private Core() {
         Log.info("Creating Core");
 
+        availableOpModes = new ArrayList<>();
+    
         subsystemManager = new SubsystemManager();
     }
 
@@ -46,8 +58,11 @@ public class Core {
      * Called immediately upon construction of the OpModeRobot.
      * Passes robot-specific definition to the appropriate managers.
      * @param subsystems Definition of subsystems from WsSubsystems
+     * @param opModes Definition of op modes from WsOpModes
      */
-    public void initRobot(SubsystemEnum[] subsystems) {
+    public void initRobot(SubsystemEnum[] subsystems, OpModeEnum[] opModes) {
+        configuredOpModes = opModes;
+
         subsystemManager.createSubsystems(subsystems);
     }
 
@@ -69,7 +84,38 @@ public class Core {
      * Called on robotPeriodic() to trigger all managers and their children to update.
      */
     public void update() {
-        subsystemManager.update();
+        subsystemManager.update(getOpMode());
+    }
+
+    /**
+     * Builds a list of OpModeEnum from the previously provided array of OpModeEnum, filtering by enabled and robot state.
+     * @return All OpModeEnum that should be added
+     */
+    public ArrayList<OpModeEnum> updateAvailableOpModes() {
+        availableOpModes.clear();
+        for (OpModeEnum opMode : configuredOpModes) {
+            if (opMode.isEnabled() && (!RobotBase.isSimulation() || opMode.inSimulation()) && (!RobotState.isFMSAttached() || opMode.inCompetition())) {
+                availableOpModes.add(opMode);
+            }
+        }
+        return availableOpModes;
+    }
+
+    /**
+     * Finds the current op mode in the provided list of available op modes.
+     * @return Currently select OpModeEnum or null
+     */
+    public OpModeEnum getOpMode() {
+        RobotMode mode = RobotState.getRobotMode();
+        String name = RobotState.getOpMode();
+
+        for (OpModeEnum opMode : availableOpModes) {
+            if (opMode.getRobotMode() == mode && opMode.getName() == name) {
+                return opMode;
+            }
+        }
+
+        return null;
     }
 
     /**
