@@ -22,16 +22,6 @@ public class LoopTimer implements Subsystem {
     }
 
     @Override
-    public void initInputs() {
-        Log.info("LoopTimer.initInputs");
-    }
-
-    @Override
-    public void initOutputs() {
-        Log.info("LoopTimer.initOutputs");
-    }
-
-    @Override
     public void initSubsystems() {
         Log.info("LoopTimer.initSubsystems");
     }

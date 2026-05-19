@@ -40,8 +40,8 @@ public abstract class AutoOpMode extends PeriodicOpMode {
             step.update();
 
             if (step.isFinished()) {
-            logInfo(step.getName() + " complete");
-            step();
+                logInfo(step.getName() + " complete");
+                step();
             }
         }
     }
