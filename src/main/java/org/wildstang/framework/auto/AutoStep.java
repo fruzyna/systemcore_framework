@@ -10,14 +10,7 @@ public abstract class AutoStep {
 
     public AutoStep() {
         finished = false;
-        onCreate();
     }
-
-    /**
-     * Called during construction.
-     * This should perform any initialization that can be done while the robot is disabled.
-     */
-    public abstract void onCreate();
 
     /**
      * Called immediately after the previous step ends.

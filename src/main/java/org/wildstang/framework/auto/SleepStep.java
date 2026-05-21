@@ -14,10 +14,6 @@ public class SleepStep extends AutoStep {
         super();
 
         mDelaySeconds = pDelaySeconds;
-    }
-
-    @Override
-    public void onCreate() {
         timer = new Timer();
     }
 
