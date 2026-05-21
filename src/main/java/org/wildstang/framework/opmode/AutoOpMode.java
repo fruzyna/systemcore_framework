@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.wildstang.framework.auto.AutoStep;
 import org.wildstang.framework.logger.Log;
+import org.wpilib.driverstation.RobotState;
 import org.wpilib.opmode.PeriodicOpMode;
 
 /**
@@ -94,7 +95,8 @@ public abstract class AutoOpMode extends PeriodicOpMode {
      * @param message Message to log
      */
     private void logInfo(String message) {
-        Log.info("[" + getName() + "] " + message);
+        // this assumes that the current OpMode is the child AutoOpMode, which should always be the case
+        Log.info("[" + RobotState.getOpMode() + "] " + message);
     }
 
     /**
@@ -107,10 +109,4 @@ public abstract class AutoOpMode extends PeriodicOpMode {
      * Used to define AutoSteps in order using the addStep function.
      */
     protected abstract void defineSteps();
-
-    /**
-     * Exclusively used for logging purposes, defines a name of the AutoOpMode.
-     * @return A unique name incorporating any parameters to the function.
-     */
-    protected abstract String getName();
 }

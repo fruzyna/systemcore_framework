@@ -15,9 +15,4 @@ public class Sleeper extends AutoOpMode {
         addStep(new SleepStep(10));
     }
 
-    @Override
-    protected String getName() {
-        return "Sleeper";
-    }
-
 }
