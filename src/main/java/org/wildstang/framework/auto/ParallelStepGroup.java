@@ -10,10 +10,19 @@ public class ParallelStepGroup extends AutoStep {
     private boolean initialized;
     private ArrayList<AutoStep> mSteps;
 
+    /**
+     * Constructs a new ParallelStepGroup with an empty list of AutoSteps.
+     * addStep must be called to populate the step group.
+     */
     public ParallelStepGroup() {
         this(new ArrayList<>());
     }
 
+    /**
+     * Constructs a new ParallelStepGroup with a given list of AutoSteps.
+     * Optionally, addStep may be used to add additional steps.
+     * @param pSteps Initial list of steps
+     */
     public ParallelStepGroup(ArrayList<AutoStep> pSteps) {
         super();
 

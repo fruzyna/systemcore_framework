@@ -8,6 +8,9 @@ public abstract class AutoStep {
     
     private boolean finished;
 
+    /**
+     * All AutoSteps must call super to initialize the step as un-finished.
+     */
     public AutoStep() {
         finished = false;
     }

@@ -35,6 +35,10 @@ public class WsGamepad extends Gamepad {
         return operator;
     }
 
+    /**
+     * Constructs a WsGamepad and passes the port index to the parent class.
+     * @param port Port index of the gamepad in the driver station
+     */
     public WsGamepad(int port) {
         super(port);
     }

@@ -10,6 +10,10 @@ public class SleepStep extends AutoStep {
     private double mDelaySeconds;
     private Timer timer;
 
+    /**
+     * Initializes the step and its timer. Stores the length of time to sleep.
+     * @param pDelaySeconds Number of seconds before the step is finished
+     */
     public SleepStep(double pDelaySeconds) {
         super();
 

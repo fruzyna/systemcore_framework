@@ -13,6 +13,10 @@ public class SubsystemManager {
     
     private HashMap<SubsystemEnum, Subsystem> subsystems;
 
+    /**
+     * Constructs an empty SubsystemManager.
+     * The Map of subsystems should be populated using createSubsystems().
+     */
     public SubsystemManager() {
         Log.info("Creating SubsystemManager");
 
@@ -50,6 +54,7 @@ public class SubsystemManager {
 
     /**
      * Periodically triggers each available subsystem to update.
+     * @param opMode Enum representation of the current OpMode, if null no only applyChanges() is called
      */
     public void update(OpModeEnum opMode) {
         for (Subsystem subsystem : subsystems.values()) {

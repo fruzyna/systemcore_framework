@@ -45,6 +45,12 @@ deploy {
     }
 }
 
+// build docs in /docs folder, don't build for sample
+javadoc {
+    destinationDir = file("docs")
+    include 'org/wildstang/framework/**'
+}
+
 def deployArtifact = deploy.targets.systemcore.artifacts.wpilibJava
 
 // Set to true to use debug for all targets including JNI, which will drastically impact

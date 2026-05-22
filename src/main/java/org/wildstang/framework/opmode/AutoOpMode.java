@@ -16,6 +16,9 @@ public abstract class AutoOpMode extends PeriodicOpMode {
     private int currentStep;
     private ArrayList<AutoStep> autoSteps;
 
+    /**
+     * All AutoOpModes are constructed with an empty list of steps which must be populated using defineSteps().
+     */
     public AutoOpMode() {
         initialized = false;
         currentStep = -1;

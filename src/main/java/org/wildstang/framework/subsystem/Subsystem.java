@@ -25,13 +25,13 @@ public interface Subsystem {
 
     /**
      * Update function called during TELEOPERATED OpModes before applyChanges().
-     * @param autoMode Selected OpMode.
+     * @param teleMode Selected OpMode.
      */
     void teleUpdate(OpModeEnum teleMode);
 
     /**
      * Update function called during UTILITY OpModes before applyChanges().
-     * @param autoMode Selected OpMode.
+     * @param utilMode Selected OpMode.
      */
     void utilUpdate(OpModeEnum utilMode);
 
