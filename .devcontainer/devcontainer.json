@@ -18,6 +18,7 @@
 		"vscode": {
 			"settings": {},
 			"extensions": [
+				"vscjava.vscode-java-pack",
 				"davidanson.vscode-markdownlint",
 				"streetsidesoftware.code-spell-checker",
 				"/tmp/wpilib.vsix"
