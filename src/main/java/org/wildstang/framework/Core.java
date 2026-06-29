@@ -7,7 +7,11 @@ import org.wpilib.hardware.hal.RobotMode;
 
 import java.util.ArrayList;
 
+import org.wildstang.framework.drive.swerve.SwerveDrive;
 import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.odometry.SourceEnum;
+import org.wildstang.framework.odometry.WsOdometry;
+import org.wildstang.framework.odometry.ZoneEnum;
 import org.wildstang.framework.opmode.AutoOpMode;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.opmode.WsOpMode;
@@ -46,13 +50,15 @@ public class Core {
     private OpModeEnum[] configuredOpModes = {};
     ArrayList<OpModeEnum> availableOpModes;
 
+    private WsOdometry odometry;
     private SubsystemManager subsystemManager;
 
     private Core() {
         Log.info("Creating Core");
 
         availableOpModes = new ArrayList<>();
-    
+
+        odometry = new WsOdometry();
         subsystemManager = new SubsystemManager();
     }
 
@@ -62,10 +68,14 @@ public class Core {
      * @param subsystems Definition of subsystems from WsSubsystems
      * @param opModes Definition of op modes from WsOpModes
      */
-    public void initRobot(SubsystemEnum[] subsystems, OpModeEnum[] opModes) {
+    public void initRobot(SubsystemEnum[] subsystems, OpModeEnum[] opModes, SourceEnum[] sources, ZoneEnum[] zones) {
         configuredOpModes = opModes;
 
         subsystemManager.createSubsystems(subsystems);
+
+        if (getDrive() != null) {
+            odometry.initOdometry(sources, zones);
+        }
     }
 
     /**
@@ -86,6 +96,7 @@ public class Core {
      * Called on robotPeriodic() to trigger all managers and their children to update.
      */
     public void update() {
+        odometry.updatePose();
         subsystemManager.update(getOpMode());
     }
 
@@ -129,5 +140,13 @@ public class Core {
      */
     public SubsystemManager getSubsystemManager() {
         return subsystemManager;
+    }
+
+    public SwerveDrive getDrive() {
+        return subsystemManager.getDrive();
+    }
+
+    public WsOdometry getOdometry() {
+        return odometry;
     }
 }

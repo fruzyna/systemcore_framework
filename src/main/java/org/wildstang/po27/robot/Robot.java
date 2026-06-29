@@ -14,7 +14,12 @@ public class Robot extends OpModeRobot {
     public Robot() {
         super(Core.getLoopRate());
 
-        Core.getInstance().initRobot(WsSubsystems.values(), WsOpModes.values());
+        Core.getInstance().initRobot(
+            WsSubsystems.values(),
+            WsOpModes.values(),
+            WsSources.values(),
+            WsZones.values()
+        );
 
         populateOpModes();
     }

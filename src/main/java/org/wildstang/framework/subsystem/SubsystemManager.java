@@ -3,6 +3,7 @@ package org.wildstang.framework.subsystem;
 import java.util.HashMap;
 
 import org.wildstang.framework.CoreUtils;
+import org.wildstang.framework.drive.swerve.SwerveDrive;
 import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.opmode.OpModeEnum;
 
@@ -85,5 +86,21 @@ public class SubsystemManager {
      */
     public Subsystem getSubsystem(SubsystemEnum definedSubsystem) {
         return subsystems.get(definedSubsystem);
+    }
+
+    public SwerveDrive getDrive() {
+        if (subsystems.isEmpty()) {
+            Log.warn("No subsystems exist, returning null SwerveDrive");
+            return null;
+        }
+
+        for (Subsystem subsystem : subsystems.values()) {
+            if (subsystem instanceof SwerveDrive) {
+                return (SwerveDrive) subsystem;
+            }
+        }
+
+        Log.warn("Could not find a SwerveDrive subsystem, returning null");
+        return null;
     }
 }
