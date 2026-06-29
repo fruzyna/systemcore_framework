@@ -5,7 +5,9 @@ import org.wpilib.math.geometry.Transform3d;
 
 public enum WsSources implements SourceEnum {
 
-    IMU(OdometrySource.ONBOARD_IMU, "", Transform3d.kZero);
+    IMU(OdometrySource.ONBOARD_IMU, "", Transform3d.kZero),
+    BACKCAM(OdometrySource.PHOTON_VISION, "BackCam", Transform3d.kZero),
+    FRONTCAM(OdometrySource.PHOTON_VISION, "FontCam", Transform3d.kZero);
 
     private OdometrySource mSource;
     private String mPort;

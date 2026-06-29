@@ -3,11 +3,13 @@ package org.wildstang.po27.robot;
 import org.wildstang.framework.Core;
 import org.wildstang.framework.subsystem.Subsystem;
 import org.wildstang.framework.subsystem.SubsystemEnum;
+import org.wildstang.po27.subsystem.Drive;
 import org.wildstang.po27.subsystem.GamepadTest;
 import org.wildstang.po27.subsystem.LoopTimer;
 
 public enum WsSubsystems implements SubsystemEnum {
 
+    DRIVE("Drive", Drive.class),
     LOOP_TIMER("Loop Timer", LoopTimer.class),
     GAMEPAD("Gamepad", GamepadTest.class);
 
