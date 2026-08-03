@@ -14,7 +14,7 @@ public class LoopTimer implements Subsystem {
     private long lastCenturyTime;
 
     @Override
-    public void init() {
+    public void resetState() {
         Log.info("LoopTimer.init");
 
         loops = 0;

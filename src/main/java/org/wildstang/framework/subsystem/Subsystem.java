@@ -10,7 +10,7 @@ public interface Subsystem {
     /**
      * Called immediately following construction, used to initialize the subsystem.
      */
-    void init();
+    void resetState();
 
     /**
      * Called after all Subsystems are constructed and initialized, used to initialize connections to other subsystems.
