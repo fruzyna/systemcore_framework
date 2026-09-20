@@ -7,6 +7,8 @@ import org.wpilib.driverstation.Gamepad;
  */
 public class WsGamepad extends Gamepad {
 
+    private static final double TRIGGER_THRESHOLD = 0.1;
+
     private static final int DRIVER = 0;
     private static final int OPERATOR = 1;
 
@@ -44,21 +46,81 @@ public class WsGamepad extends Gamepad {
     }
 
     /**
-     * Allows interacting with gamepad axes such as triggers as if they were buttons.
-     * Uses an absolute threshold of 10%.
-     * @param axis Axis to treat as a button
-     * @return Whether the axis has exceeded the threshold
+     * Helper function that returns the state of the west face button or X on XBOX.
+     * @return The state of the button
      */
-    public boolean getButton(Gamepad.Axis axis) {
-        return Math.abs(getAxis(axis)) > 0.1;
+    public boolean getXButton() {
+        return getWestFaceButton();
     }
 
     /**
-     * Allows interacting with gamepad buttons using the XboxButton wrapper, so A, B, X, and Y can be used.
-     * @param button Requested Xbox button
-     * @return Whether the button is pressed
+     * Helper function that returns the state of the north face button or Y on XBOX.
+     * @return The state of the button
      */
-    public boolean getButton(XboxButton button) {
-        return getButton(button.getGamepadButton());
+    public boolean getYButton() {
+        return getNorthFaceButton();
+    }
+
+    /**
+     * Helper function that returns the state of the east face button or B on XBOX.
+     * @return The state of the button
+     */
+    public boolean getBButton() {
+        return getEastFaceButton();
+    }
+
+    /**
+     * Helper function that returns the state of the south face button or A on XBOX.
+     * @return The state of the button
+     */
+    public boolean getAButton() {
+        return getSouthFaceButton();
+    }
+
+    /**
+     * Helper function that treats a given axis as a button, returning a boolean state.
+     * @param axis Axis to treat as a button
+     * @param threshold Threshold at which the virtual button is activated
+     * @return The virtual state of the button
+     */
+    public boolean getAxisAsButton(Gamepad.Axis axis, double threshold) {
+        if (threshold == 0) {
+            threshold = TRIGGER_THRESHOLD;
+        }
+        return Math.abs(getAxis(axis)) > threshold;
+    }
+
+    /**
+     * Helper function that treats the left trigger as a button, returning a boolean state.
+     * @param threshold Threshold at which the virtual button is activated
+     * @return The virtual state of the button
+     */
+    public boolean getLeftTriggerButton(double threshold) {
+        return getAxisAsButton(Gamepad.Axis.LEFT_TRIGGER, threshold);
+    }
+
+    /**
+     * Helper function that treats the right trigger as a button, returning a boolean state.
+     * @param threshold Threshold at which the virtual button is activated
+     * @return The virtual state of the button
+     */
+    public boolean getRightTriggerButton(double threshold) {
+        return getAxisAsButton(Gamepad.Axis.RIGHT_TRIGGER, threshold);
+    }
+
+    /**
+     * Helper function that treats the left trigger as a button, returning a boolean state.
+     * @return The virtual state of the button
+     */
+    public boolean getLeftTriggerButton() {
+        return getLeftTriggerButton(TRIGGER_THRESHOLD);
+    }
+
+    /**
+     * Helper function that treats the right trigger as a button, returning a boolean state.
+     * @return The virtual state of the button
+     */
+    public boolean getRightTriggerButton() {
+        return getRightTriggerButton(TRIGGER_THRESHOLD);
     }
 }

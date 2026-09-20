@@ -1,7 +1,6 @@
 package org.wildstang.po27.subsystem;
 
 import org.wildstang.framework.input.WsGamepad;
-import org.wildstang.framework.input.XboxButton;
 import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.subsystem.Subsystem;
@@ -13,6 +12,9 @@ import org.wpilib.driverstation.Gamepad;
  */
 public class GamepadTest implements Subsystem {
 
+    private WsGamepad driver;
+    private WsGamepad operator;
+
     private boolean bPressed;
     private boolean triggerPressed;
     private double rightPosition;
@@ -22,7 +24,10 @@ public class GamepadTest implements Subsystem {
     private double rightLast;
 
     @Override
-    public void init() {
+    public void resetState() {
+        driver = WsGamepad.getDriver();
+        operator = WsGamepad.getOperator();
+
         bLast = false;
         triggerLast = false;
         rightLast = 0;
@@ -38,30 +43,34 @@ public class GamepadTest implements Subsystem {
 
     @Override
     public void teleUpdate(OpModeEnum teleMode) {
-        if (WsGamepad.getDriver().isConnected()) {
-            bPressed = WsGamepad.getDriver().getButton(XboxButton.B);
+        if (driver.isConnected()) {
+            bPressed = driver.getBButton();
             // These axes appear to be backwards (others are wrong too)
-            triggerPressed = WsGamepad.getDriver().getButton(Gamepad.Axis.RIGHT_X);
-            rightPosition = WsGamepad.getDriver().getAxis(Gamepad.Axis.LEFT_TRIGGER);
+            //triggerPressed = WsGamepad.getDriver().getButton(Gamepad.Axis.RIGHT_X);
+            //rightPosition = WsGamepad.getDriver().getAxis(Gamepad.Axis.LEFT_TRIGGER);
+            triggerPressed = driver.getRightTriggerButton();
+            rightPosition = driver.getRightX();
         }
     }
 
     @Override
     public void utilUpdate(OpModeEnum utilMode) {
-        if (WsGamepad.getDriver().isConnected()) {
+        if (driver.isConnected()) {
             if (utilMode == WsOpModes.CHANGED_FNS) {
-                if (WsGamepad.getDriver().getEastFaceButtonPressed()) {
+                if (driver.getBButton()) {
                     bPressed = true;
                 }
-                else if (WsGamepad.getDriver().getEastFaceButtonReleased()) {
+                else {
                     bPressed = false;
                 }
             }
             else if (utilMode == WsOpModes.INPUT_FNS) {
-                bPressed = WsGamepad.getDriver().getEastFaceButton();
+                bPressed = driver.getBButton();
                 // These axes appear to be backwards (others are wrong too)
-                triggerPressed = Math.abs(WsGamepad.getDriver().getRightX()) > 0.1;
-                rightPosition = WsGamepad.getDriver().getLeftTriggerAxis();
+                //triggerPressed = Math.abs(WsGamepad.getDriver().getRightX()) > 0.1;
+                //rightPosition = WsGamepad.getDriver().getLeftTriggerAxis();
+                triggerPressed = Math.abs(driver.getLeftTriggerAxis()) > 0.1;
+                rightPosition = driver.getRightX();
             }
         }
     }
