@@ -1,9 +1,11 @@
 package org.wildstang.framework;
 
 import org.wildstang.framework.subsystem.SubsystemManager;
+import org.wpilib.driverstation.DriverStationDisplay;
 import org.wpilib.driverstation.RobotState;
 import org.wpilib.framework.RobotBase;
 import org.wpilib.hardware.hal.RobotMode;
+import org.wpilib.system.RobotController;
 
 import java.util.ArrayList;
 
@@ -69,6 +71,18 @@ public class Core extends WsTelemetry {
         configuredOpModes = opModes;
 
         subsystemManager.createSubsystems(subsystems);
+
+        // add team name to display
+        int teamNum = RobotController.getTeamNumber();
+        String teamName = "Team " + teamNum;
+        if (teamNum == 111) {
+            teamName = "WildStang";
+        }
+        else if (teamNum == 112) {
+            teamName = "Plus One";
+        }
+        DriverStationDisplay.addKeyedLine("Team Name", teamName);
+        DriverStationDisplay.updateLines();
     }
 
     /**
