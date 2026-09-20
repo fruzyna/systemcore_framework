@@ -4,12 +4,13 @@ import java.util.HashMap;
 
 import org.wildstang.framework.CoreUtils;
 import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.logger.WsTelemetry;
 import org.wildstang.framework.opmode.OpModeEnum;
 
 /**
  * Manages Subsystem creation and cycling on behalf of Core.
  */
-public class SubsystemManager {
+public class SubsystemManager extends WsTelemetry {
     
     private HashMap<SubsystemEnum, Subsystem> subsystems;
 
@@ -21,6 +22,8 @@ public class SubsystemManager {
         Log.info("Creating SubsystemManager");
 
         subsystems = new HashMap<>();
+
+        setupTelemetry("SubsystemManager");
     }
 
     /**
@@ -46,6 +49,7 @@ public class SubsystemManager {
                     Log.error("Failed to create subsystem " + ssEnum.getName());
                 }
             }
+            telemetry.log(ssEnum.getName(), ssEnum.isEnabled() ? "Enabled" : "Disabled");
         }
 
         for (Subsystem subsystem : subsystems.values()) {
