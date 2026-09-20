@@ -8,6 +8,7 @@ import org.wpilib.hardware.hal.RobotMode;
 import java.util.ArrayList;
 
 import org.wildstang.framework.logger.Log;
+import org.wildstang.framework.logger.WsTelemetry;
 import org.wildstang.framework.opmode.AutoOpMode;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.opmode.WsOpMode;
@@ -18,7 +19,7 @@ import org.wildstang.framework.subsystem.SubsystemEnum;
  * Centralizes the various calls coming from an implementation of OpModeRobot, to move as much operation into the framework as possible.
  * This class is a singleton meaning there is only one instance that should be created and that instance is accessed using getInstance().
  */
-public class Core {
+public class Core extends WsTelemetry {
 
     private static final int LOOP_RATE = 50;
 
@@ -54,6 +55,8 @@ public class Core {
         availableOpModes = new ArrayList<>();
     
         subsystemManager = new SubsystemManager();
+
+        setupTelemetry("Core");
     }
 
     /**
@@ -86,7 +89,9 @@ public class Core {
      * Called on robotPeriodic() to trigger all managers and their children to update.
      */
     public void update() {
-        subsystemManager.update(getOpMode());
+        OpModeEnum opMode = getOpMode();
+        telemetry.log("opMode", opMode.getName());
+        subsystemManager.update(opMode);
     }
 
     /**
