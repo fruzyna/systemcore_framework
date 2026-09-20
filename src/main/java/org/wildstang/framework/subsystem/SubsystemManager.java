@@ -37,6 +37,7 @@ public class SubsystemManager {
             if (ssEnum.isEnabled()) {
                 try {
                     Subsystem subsystem = (Subsystem) CoreUtils.createObject(ssEnum.getSubsystemClass());
+                    subsystem.setupTelemetry(ssEnum.getName());
                     subsystem.resetState();
                     subsystems.put(ssEnum, subsystem);
                     Log.info("Created subsystem " + ssEnum.getName());

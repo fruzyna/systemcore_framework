@@ -8,13 +8,13 @@ import org.wpilib.system.RobotController;
 /**
  * An example subsystem which measures the timing of the periodic update loop.
  */
-public class LoopTimer implements Subsystem {
+public class LoopTimer extends Subsystem {
 
     private int loops;
     private long lastCenturyTime;
 
     @Override
-    public void resetState() {
+    protected void resetState() {
         Log.info("LoopTimer.init");
 
         loops = 0;
@@ -22,33 +22,37 @@ public class LoopTimer implements Subsystem {
     }
 
     @Override
-    public void initSubsystems() {
+    protected void initSubsystems() {
         Log.info("LoopTimer.initSubsystems");
     }
 
     @Override
-    public void autoUpdate(OpModeEnum autoMode) {
+    protected void autoUpdate(OpModeEnum autoMode) {
     }
 
     @Override
-    public void teleUpdate(OpModeEnum teleMode) {
+    protected void teleUpdate(OpModeEnum teleMode) {
     }
 
     @Override
-    public void utilUpdate(OpModeEnum utilMode) {
+    protected void utilUpdate(OpModeEnum utilMode) {
     }
 
     @Override
-    public void applyChanges() {
+    protected void applyChanges() {
         long loopStart = RobotController.getMonotonicTime();
 
         if (loops == 0) {
             lastCenturyTime = loopStart;
         }
-        else if (loops % 100 == 0) {
-            double deltaSecs = (double) (loopStart - lastCenturyTime) / 1000000;
-            Log.info("Last 100 loops: " + deltaSecs + " s (" + (100 / deltaSecs) + " Hz)");
-            lastCenturyTime = loopStart;
+        else {
+            if (loops % 100 == 0) {
+                double deltaSecs = (double) (loopStart - lastCenturyTime) / 1000000;
+                Log.info("Last 100 loops: " + deltaSecs + " s (" + (100 / deltaSecs) + " Hz)");
+                telemetry.log("loopTime", deltaSecs / 100);
+                telemetry.log("loopRate", 100 / deltaSecs);
+                lastCenturyTime = loopStart;
+            }
         }
 
         ++loops;

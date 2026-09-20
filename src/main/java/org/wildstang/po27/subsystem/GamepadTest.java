@@ -5,12 +5,11 @@ import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.subsystem.Subsystem;
 import org.wildstang.po27.robot.WsOpModes;
-import org.wpilib.driverstation.Gamepad;
 
 /**
  * An example subsystem which queries a few inputs from the new generic Gamepad class.
  */
-public class GamepadTest implements Subsystem {
+public class GamepadTest extends Subsystem {
 
     private WsGamepad driver;
     private WsGamepad operator;
@@ -24,7 +23,7 @@ public class GamepadTest implements Subsystem {
     private double rightLast;
 
     @Override
-    public void resetState() {
+    protected void resetState() {
         driver = WsGamepad.getDriver();
         operator = WsGamepad.getOperator();
 
@@ -34,15 +33,15 @@ public class GamepadTest implements Subsystem {
     }
 
     @Override
-    public void initSubsystems() {
+    protected void initSubsystems() {
     }
 
     @Override
-    public void autoUpdate(OpModeEnum autoMode) {
+    protected void autoUpdate(OpModeEnum autoMode) {
     }
 
     @Override
-    public void teleUpdate(OpModeEnum teleMode) {
+    protected void teleUpdate(OpModeEnum teleMode) {
         if (driver.isConnected()) {
             bPressed = driver.getBButton();
             // These axes appear to be backwards (others are wrong too)
@@ -54,7 +53,7 @@ public class GamepadTest implements Subsystem {
     }
 
     @Override
-    public void utilUpdate(OpModeEnum utilMode) {
+    protected void utilUpdate(OpModeEnum utilMode) {
         if (driver.isConnected()) {
             if (utilMode == WsOpModes.CHANGED_FNS) {
                 if (driver.getBButton()) {
@@ -91,6 +90,10 @@ public class GamepadTest implements Subsystem {
             rightLast = rightPosition;
             Log.info("Right joystick X changed to " + rightPosition);
         }
+
+        telemetry.log("bButton", bLast);
+        telemetry.log("leftTrigger", triggerLast);
+        telemetry.log("rightX", rightLast);
     }
     
 }
