@@ -68,8 +68,8 @@ public class GamepadTest implements Subsystem {
                 bPressed = driver.getBButton();
                 // These axes appear to be backwards (others are wrong too)
                 //triggerPressed = Math.abs(WsGamepad.getDriver().getRightX()) > 0.1;
-                //rightPosition = WsGamepad.getDriver().getLeftTriggerAxis();
-                triggerPressed = Math.abs(driver.getLeftTriggerAxis()) > 0.1;
+                //rightPosition = WsGamepad.getDriver().getLeftTrigger();
+                triggerPressed = Math.abs(driver.getLeftTrigger()) > 0.1;
                 rightPosition = driver.getRightX();
             }
         }

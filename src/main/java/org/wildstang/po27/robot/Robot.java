@@ -23,7 +23,7 @@ public class Robot extends OpModeRobot {
         clearOpModes();
         
         for (OpModeEnum opMode : Core.getInstance().updateAvailableOpModes()) {
-            addOpMode(opMode.getOpModeClass(), opMode.getRobotMode(), opMode.getName());
+            addOpMode(opMode.getRobotMode(), opMode.getName(), opMode.getOpModeClass());
             Log.info("Added " + opMode.getRobotMode().name() + " op mode " + opMode.getName());
         }
 

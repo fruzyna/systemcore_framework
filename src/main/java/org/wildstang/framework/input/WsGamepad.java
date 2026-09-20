@@ -46,35 +46,35 @@ public class WsGamepad extends Gamepad {
     }
 
     /**
-     * Helper function that returns the state of the west face button or X on XBOX.
+     * Helper function that returns the state of the left face button or X on XBOX.
      * @return The state of the button
      */
     public boolean getXButton() {
-        return getWestFaceButton();
+        return getFaceLeftButton();
     }
 
     /**
-     * Helper function that returns the state of the north face button or Y on XBOX.
+     * Helper function that returns the state of the up face button or Y on XBOX.
      * @return The state of the button
      */
     public boolean getYButton() {
-        return getNorthFaceButton();
+        return getFaceUpButton();
     }
 
     /**
-     * Helper function that returns the state of the east face button or B on XBOX.
+     * Helper function that returns the state of the right face button or B on XBOX.
      * @return The state of the button
      */
     public boolean getBButton() {
-        return getEastFaceButton();
+        return getFaceRightButton();
     }
 
     /**
-     * Helper function that returns the state of the south face button or A on XBOX.
+     * Helper function that returns the state of the down face button or A on XBOX.
      * @return The state of the button
      */
     public boolean getAButton() {
-        return getSouthFaceButton();
+        return getFaceDownButton();
     }
 
     /**
