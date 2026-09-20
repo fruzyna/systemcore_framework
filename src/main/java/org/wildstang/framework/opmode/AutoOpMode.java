@@ -85,7 +85,7 @@ public abstract class AutoOpMode extends PeriodicOpMode {
     private void step() {
         if (++currentStep < autoSteps.size()) {
             AutoStep step = autoSteps.get(currentStep);
-            step.onStart();
+            step.start();
             logInfo(step.getName() + " started");
         }
         else {

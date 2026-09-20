@@ -1,10 +1,14 @@
 package org.wildstang.framework.auto;
 
+import org.wildstang.framework.logger.WsTelemetry;
+
 /**
  * Owned by AutoOpModes, AutoSteps define a single action that can be performed by the robot during autonomous.
  * Steps are intrinsically serial, meaning they run one at a time.
  */
-public abstract class AutoStep {
+public abstract class AutoStep extends WsTelemetry {
+
+    private static final String STATE_LOG = "state";
     
     private boolean finished;
 
@@ -13,6 +17,15 @@ public abstract class AutoStep {
      */
     public AutoStep() {
         finished = false;
+
+        setupTelemetry(getName());
+        telemetry.log(STATE_LOG, "initialized");
+    }
+
+    /** Starts the step. */
+    public void start() {
+        onStart();
+        telemetry.log(STATE_LOG, "started");
     }
 
     /**
@@ -46,5 +59,6 @@ public abstract class AutoStep {
      */
     public void setFinished() {
         finished = true;
+        telemetry.log(STATE_LOG, "finished");
     }
 }
