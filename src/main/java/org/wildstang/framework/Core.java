@@ -104,7 +104,8 @@ public class Core extends WsTelemetry {
      */
     public void update() {
         OpModeEnum opMode = getOpMode();
-        telemetry.log("opMode", opMode.getName());
+        String name = opMode != null ? opMode.getName() : "null";
+        telemetry.log("opMode", name);
         subsystemManager.update(opMode);
     }
 
