@@ -6,15 +6,20 @@ import org.wildstang.framework.auto.AutoStep;
 import org.wildstang.framework.logger.Log;
 import org.wpilib.driverstation.RobotState;
 import org.wpilib.opmode.PeriodicOpMode;
+import org.wpilib.telemetry.Telemetry;
+import org.wpilib.telemetry.TelemetryTable;
 
 /**
  * Parent OpMode to all autonomous modes. Serves the role previously provided by AutoProgram.
  */
 public abstract class AutoOpMode extends PeriodicOpMode {
 
+    private static final String STATE_STRING = "State";
+
     private boolean initialized;
     private int currentStep;
     private ArrayList<AutoStep> autoSteps;
+    private TelemetryTable telemetry;
 
     /**
      * All AutoOpModes are constructed with an empty list of steps which must be populated using defineSteps().
@@ -23,6 +28,7 @@ public abstract class AutoOpMode extends PeriodicOpMode {
         initialized = false;
         currentStep = -1;
         autoSteps = new ArrayList<>();
+        telemetry = Telemetry.getTable("Autonomous");
     }
 
     @Override
@@ -55,6 +61,7 @@ public abstract class AutoOpMode extends PeriodicOpMode {
         if (currentStep != autoSteps.size()) {
             currentStep = autoSteps.size();
             logInfo("Exited early");
+            telemetry.log(STATE_STRING, "Exited");
         }
     }
 
@@ -68,6 +75,7 @@ public abstract class AutoOpMode extends PeriodicOpMode {
             defineSteps();
             initialized = true;
             logInfo("Initialized");
+            telemetry.log(STATE_STRING, "Initialized");
         }
     }
 
@@ -87,9 +95,11 @@ public abstract class AutoOpMode extends PeriodicOpMode {
             AutoStep step = autoSteps.get(currentStep);
             step.start();
             logInfo(step.getName() + " started");
+            telemetry.log(STATE_STRING, "Running " + step.getName());
         }
         else {
             logInfo("AutoOpMode complete");
+            telemetry.log(STATE_STRING, "Complete");
         }
     }
 
