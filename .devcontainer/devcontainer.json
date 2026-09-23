@@ -1,5 +1,3 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
 	"name": "WS WPILib Java",
 	"build": {
@@ -8,15 +6,33 @@
 			"--platform=linux/amd64"
 		]
 	},
+	// use the Ubuntu base image with Java as a feature for a newer glibc
+	"features": {
+		"ghcr.io/devcontainers/features/java": {
+			"version": "25",
+			"jdkDistro": "ms"
+		}
+	},
 
 	"runArgs": [
-		"--network=host"
+		"--network=host",
+		// fix for devcontainer feature bug with Podman: https://github.com/devcontainers/features/issues/1480
+		"--tmpfs=/tmp:rw,exec,nosuid,nodev,mode=1777"
 	],
 
-	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
-			"settings": {},
+			// force VS Code / Gradle to look for Java in the right place
+			"settings": {
+				"java.import.gradle.java.home": "/usr/local/sdkman/candidates/java/current",
+				"java.configuration.runtimes": [
+					{
+						"name": "JavaSE-25",
+						"path": "/usr/local/sdkman/candidates/java/current",
+						"default": true
+					}
+				]
+			},
 			"extensions": [
 				"vscjava.vscode-java-pack",
 				"davidanson.vscode-markdownlint",
