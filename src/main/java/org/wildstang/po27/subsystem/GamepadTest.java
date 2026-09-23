@@ -44,10 +44,7 @@ public class GamepadTest extends Subsystem {
     protected void teleUpdate(OpModeEnum teleMode) {
         if (driver.isConnected()) {
             bPressed = driver.getBButton();
-            // These axes appear to be backwards (others are wrong too)
-            //triggerPressed = WsGamepad.getDriver().getButton(Gamepad.Axis.RIGHT_X);
-            //rightPosition = WsGamepad.getDriver().getAxis(Gamepad.Axis.LEFT_TRIGGER);
-            triggerPressed = driver.getRightTriggerButton();
+            triggerPressed = driver.getLeftTriggerButton();
             rightPosition = driver.getRightX();
         }
     }
@@ -65,9 +62,6 @@ public class GamepadTest extends Subsystem {
             }
             else if (utilMode == WsOpModes.INPUT_FNS) {
                 bPressed = driver.getBButton();
-                // These axes appear to be backwards (others are wrong too)
-                //triggerPressed = Math.abs(WsGamepad.getDriver().getRightX()) > 0.1;
-                //rightPosition = WsGamepad.getDriver().getLeftTrigger();
                 triggerPressed = Math.abs(driver.getLeftTrigger()) > 0.1;
                 rightPosition = driver.getRightX();
             }
