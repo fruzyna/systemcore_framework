@@ -23,7 +23,7 @@ public class SubsystemManager extends WsTelemetry {
 
         subsystems = new HashMap<>();
 
-        setupTelemetry("SubsystemManager");
+        setupTelemetry("Subsystems");
     }
 
     /**

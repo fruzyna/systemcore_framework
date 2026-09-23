@@ -49,8 +49,8 @@ public class LoopTimer extends Subsystem {
             if (loops % 100 == 0) {
                 double deltaSecs = (double) (loopStart - lastCenturyTime) / 1000000;
                 Log.info("Last 100 loops: " + deltaSecs + " s (" + (100 / deltaSecs) + " Hz)");
-                telemetry.log("loopTime", deltaSecs / 100);
-                telemetry.log("loopRate", 100 / deltaSecs);
+                telemetry.log("Loop Time", deltaSecs / 100);
+                telemetry.log("Loop Rate", 100 / deltaSecs);
                 lastCenturyTime = loopStart;
             }
         }

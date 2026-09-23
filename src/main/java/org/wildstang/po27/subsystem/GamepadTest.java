@@ -91,9 +91,9 @@ public class GamepadTest extends Subsystem {
             Log.info("Right joystick X changed to " + rightPosition);
         }
 
-        telemetry.log("bButton", bLast);
-        telemetry.log("leftTrigger", triggerLast);
-        telemetry.log("rightX", rightLast);
+        telemetry.log("B Button", bLast);
+        telemetry.log("Left Trigger", triggerLast);
+        telemetry.log("Right X", rightLast);
     }
     
 }
