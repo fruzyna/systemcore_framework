@@ -1,20 +1,17 @@
 {
 	"name": "WS WPILib Java",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"options": [
-			"--platform=linux/amd64"
-		]
-	},
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 	// use the Ubuntu base image with Java as a feature for a newer glibc
 	"features": {
 		"ghcr.io/devcontainers/features/java": {
 			"version": "25",
 			"jdkDistro": "ms"
-		}
+		},
+		"./features/wpilib": {}
 	},
 
 	"runArgs": [
+		// pass all network interfaces through
 		"--network=host",
 		// fix for devcontainer feature bug with Podman: https://github.com/devcontainers/features/issues/1480
 		"--tmpfs=/tmp:rw,exec,nosuid,nodev,mode=1777"

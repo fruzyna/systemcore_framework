@@ -1,0 +1,6 @@
+{
+    "id": "wpilib",
+    "version": "1.0.0",
+    "name": "WPILib Extension",
+    "description": "Downloads the latest WPILib extension to be installed by the devcontainer"
+}
