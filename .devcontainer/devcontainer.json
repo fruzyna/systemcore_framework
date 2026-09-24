@@ -38,5 +38,8 @@
 				"/tmp/wpilib.vsix"
 			]
 		}
-	}
+	},
+
+	// run elastic on startup
+	"postStartCommand": "nohup bash -c 'cd /opt/elastic; python3 start_elastic.py &'"
 }

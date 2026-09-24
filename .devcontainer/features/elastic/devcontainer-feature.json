@@ -2,5 +2,5 @@
     "id": "elastic",
     "version": "1.0.0",
     "name": "Elastic Web",
-    "description": "Downloads the latest version of Elastic web."
+    "description": "Downloads Elastic web."
 }

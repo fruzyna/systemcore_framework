@@ -1,4 +1,4 @@
-# Downloads the given WPILib extension release
+# Downloads the given Elastic extension release
 from requests import get
 from urllib.request import urlretrieve
 
