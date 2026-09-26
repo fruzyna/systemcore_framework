@@ -5,11 +5,13 @@ import org.wildstang.framework.subsystem.Subsystem;
 import org.wildstang.framework.subsystem.SubsystemEnum;
 import org.wildstang.po27.subsystem.GamepadTest;
 import org.wildstang.po27.subsystem.LoopTimer;
+import org.wildstang.po27.subsystem.MotorControl;
 
 public enum WsSubsystems implements SubsystemEnum {
 
     LOOP_TIMER("Loop Timer", LoopTimer.class),
-    GAMEPAD("Gamepad", GamepadTest.class);
+    GAMEPAD("Gamepad", GamepadTest.class),
+    MOTOR_CONTROL("Motor", MotorControl.class);
 
     private String mName;
     private Class<? extends Subsystem> mSubsystemClass;
