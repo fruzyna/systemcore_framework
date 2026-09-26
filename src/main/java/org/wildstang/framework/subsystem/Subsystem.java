@@ -1,5 +1,6 @@
 package org.wildstang.framework.subsystem;
 
+import org.wildstang.framework.input.WsGamepad;
 import org.wildstang.framework.logger.WsTelemetry;
 import org.wildstang.framework.opmode.OpModeEnum;
 
@@ -25,16 +26,12 @@ public abstract class Subsystem extends WsTelemetry {
     protected abstract void autoUpdate(OpModeEnum autoMode);
 
     /**
-     * Update function called during TELEOPERATED OpModes before applyChanges().
-     * @param teleMode Selected OpMode.
+     * Update function called during TELEOPERATED and UTILITY OpModes before applyChanges().
+     * @param opMode Selected OpMode.
+     * @param driver The driver's gamepad.
+     * @param operator The operator's gamepad.
      */
-    protected abstract void teleUpdate(OpModeEnum teleMode);
-
-    /**
-     * Update function called during UTILITY OpModes before applyChanges().
-     * @param utilMode Selected OpMode.
-     */
-    protected abstract void utilUpdate(OpModeEnum utilMode);
+    protected abstract void inputUpdate(OpModeEnum opMode, WsGamepad driver, WsGamepad operator);
 
     /**
      * Called periodically to update the subsystem state, regardless of RobotMode.

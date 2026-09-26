@@ -1,5 +1,6 @@
 package org.wildstang.po27.subsystem;
 
+import org.wildstang.framework.input.WsGamepad;
 import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.subsystem.Subsystem;
@@ -31,12 +32,7 @@ public class LoopTimer extends Subsystem {
     }
 
     @Override
-    protected void teleUpdate(OpModeEnum teleMode) {
-    }
-
-    @Override
-    protected void utilUpdate(OpModeEnum utilMode) {
-    }
+    protected void inputUpdate(OpModeEnum opMode, WsGamepad driver, WsGamepad operator) {}
 
     @Override
     protected void applyChanges() {

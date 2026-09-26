@@ -3,6 +3,7 @@ package org.wildstang.framework.subsystem;
 import java.util.HashMap;
 
 import org.wildstang.framework.CoreUtils;
+import org.wildstang.framework.input.WsGamepad;
 import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.logger.WsTelemetry;
 import org.wildstang.framework.opmode.OpModeEnum;
@@ -69,10 +70,8 @@ public class SubsystemManager extends WsTelemetry {
                         subsystem.autoUpdate(opMode);
                         break;
                     case TELEOPERATED:
-                        subsystem.teleUpdate(opMode);
-                        break;
                     case UTILITY:
-                        subsystem.utilUpdate(opMode);
+                        subsystem.inputUpdate(opMode, WsGamepad.getDriver(), WsGamepad.getOperator());
                         break;
                     default:
                         break;

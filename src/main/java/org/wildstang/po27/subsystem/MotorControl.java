@@ -16,7 +16,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 public class MotorControl extends Subsystem {
 
     private TalonFX motor;
-    private WsGamepad driver;
 
     private double driverInput;
     private boolean slowMode;
@@ -24,7 +23,6 @@ public class MotorControl extends Subsystem {
 
     public MotorControl() {
         motor = new TalonFX(11, new CANBus(CANPort.CAN_S0));
-        driver = WsGamepad.getDriver();
     }
 
     @Override
@@ -41,14 +39,11 @@ public class MotorControl extends Subsystem {
     protected void autoUpdate(OpModeEnum autoMode) {}
 
     @Override
-    protected void teleUpdate(OpModeEnum teleMode) {
+    protected void inputUpdate(OpModeEnum opMode, WsGamepad driver, WsGamepad operator) {
         driverInput = driver.getRightTrigger();
         slowMode = !driver.getBButton();
         reverse = driver.getYButton();
     }
-
-    @Override
-    protected void utilUpdate(OpModeEnum utilMode) {}
 
     @Override
     protected void applyChanges() {
