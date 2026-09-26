@@ -1,4 +1,4 @@
-package org.wildstang.framework.input;
+package org.wildstang.framework.hardware;
 
 import org.wpilib.driverstation.Gamepad;
 

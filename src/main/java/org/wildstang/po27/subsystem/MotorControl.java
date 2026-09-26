@@ -1,11 +1,10 @@
 package org.wildstang.po27.subsystem;
 
-import org.wildstang.framework.input.WsGamepad;
+import org.wildstang.framework.hardware.WsCANBus;
+import org.wildstang.framework.hardware.WsGamepad;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.subsystem.Subsystem;
-import org.wpilib.hardware.bus.CANPort;
 
-import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 /**
@@ -23,7 +22,7 @@ public class MotorControl extends Subsystem {
     private boolean reverse;
 
     public MotorControl() {
-        motor = new TalonFX(11, new CANBus(CANPort.CAN_S0));
+        motor = new TalonFX(11, WsCANBus.S0);
         driver = WsGamepad.getDriver();
     }
 

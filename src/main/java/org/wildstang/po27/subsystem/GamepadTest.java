@@ -1,6 +1,6 @@
 package org.wildstang.po27.subsystem;
 
-import org.wildstang.framework.input.WsGamepad;
+import org.wildstang.framework.hardware.WsGamepad;
 import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.opmode.OpModeEnum;
 import org.wildstang.framework.subsystem.Subsystem;
