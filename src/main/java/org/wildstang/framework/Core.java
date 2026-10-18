@@ -97,6 +97,7 @@ public class Core extends WsTelemetry {
      */
     public void onDisabled() {
         Log.info("Robot disabled");
+        subsystemManager.resetSubsystems();
     }
 
     /**
