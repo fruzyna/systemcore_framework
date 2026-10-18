@@ -59,6 +59,15 @@ public class SubsystemManager extends WsTelemetry {
     }
 
     /**
+     * Called when the robot is disabled to reset the state of all the subsystems.
+     */
+    public void resetSubsystems() {
+        for (Subsystem subsystem : subsystems.values()) {
+            subsystem.resetState();
+        }
+    }
+
+    /**
      * Periodically triggers each available subsystem to update.
      * @param opMode Enum representation of the current OpMode, if null no only applyChanges() is called
      */
